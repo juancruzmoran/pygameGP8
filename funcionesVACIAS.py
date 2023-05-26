@@ -10,6 +10,7 @@ def lectura(diccionario):
 #Devuelve una cadena de 7 caracteres sin repetir con 2 o 3 vocales y a lo sumo
 # con una consonante dificil (kxyz)
 def dame7Letras():
+    letra =""
     return "diuahrn"
 
 def dameLetra(letrasEnPantalla): #elige una letra de las letras en pantalla
