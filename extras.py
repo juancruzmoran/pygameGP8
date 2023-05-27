@@ -86,3 +86,18 @@ def dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundo
     screen.blit(ren1, (190, 570))
     screen.blit(ren2, (680, 10))
     screen.blit(ren3, (10, 10))
+
+def fondoInicio():
+    screen = pygame.display.set_mode([720, 720])
+    clock = pygame.time.Clock()
+
+    done = False
+
+    background = pygame.image.load("background.jpg").convert()
+
+
+
+    screen.blit(background, [0, 0])
+
+    pygame.display.flip()
+    clock.tick(5)
