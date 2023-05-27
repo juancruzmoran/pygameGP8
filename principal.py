@@ -5,20 +5,22 @@ import pygame
 from pygame.locals import *
 
 from configuracion import *
-from funcionesRESUELTO import *
+#from funcionesRESUELTO import *
 from extras import *
+from funcionesVACIAS import *
 
 #Funcion principal
 def main():
         #Centrar la ventana y despues inicializar pygame
         os.environ["SDL_VIDEO_CENTERED"] = "1"
+        fondoInicio()
         pygame.init()
         #pygame.mixer.init()
-
+       
         #Preparar la ventana
         pygame.display.set_caption("Tiene la Palabra")
         screen = pygame.display.set_mode((ANCHO, ALTO))
-
+        
         #tiempo total del juego
         gameClock = pygame.time.Clock()
         totaltime = 0
@@ -58,7 +60,7 @@ def main():
             #Buscar la tecla apretada del modulo de eventos de pygame
             for e in pygame.event.get():
 
-                #QUIT es apretar la X en la ventana
+            #QUIT es apretar la X en la ventana
                 if e.type == QUIT:
                     pygame.quit()
                     return()
