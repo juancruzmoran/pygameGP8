@@ -1,12 +1,3 @@
-#! /usr/bin/env python
-import os, random, sys, math
-
-import pygame
-from pygame.locals import *
-
-from configuracion import *
-from funcionesRESUELTO import *
-from extras import *
 
 #Funcion principal
 def main():
@@ -34,12 +25,12 @@ def main():
         lectura(diccionario)
 
         #elige las 7 letras al azar y una de ellas como principal
-        letrasEnPantalla = dame7Letras()
+        letrasEnPantalla = dame7Letras(letras,vocales,consonanteDif)
         letraPrincipal = dameLetra(letrasEnPantalla)
 
         #se queda con 7 letras que permitan armar muchas palabras, evita que el juego sea aburrido
         while(len(dameAlgunasCorrectas(letraPrincipal, letrasEnPantalla, diccionario))< MINIMO):
-            letrasEnPantalla = dame7Letras()
+            letrasEnPantalla = dame7Letras(letras,vocales,consonanteDif)
             letraPrincipal = dameLetra(letrasEnPantalla)
 
         print(dameAlgunasCorrectas(letraPrincipal, letrasEnPantalla, diccionario))
