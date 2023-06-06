@@ -13,7 +13,7 @@ from funcionesVACIAS import *
 def main():
         #Centrar la ventana y despues inicializar pygame
         os.environ["SDL_VIDEO_CENTERED"] = "1"
-        fondoInicio()
+       
         pygame.init()
         #pygame.mixer.init()
        
@@ -94,4 +94,6 @@ def main():
 
 #Programa Principal ejecuta Main
 if __name__ == "__main__":
-    main()
+    fondoInicio()
+    if menu() == "play":
+        main()
