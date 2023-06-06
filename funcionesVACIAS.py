@@ -63,12 +63,15 @@ def esValida(letraPrincipal, letrasEnPantalla, candidata, diccionario):
 
 #devuelve los puntos
 def Puntos(candidata):
-    letras_puntuadas = ['a', 'e', 'i', 'o', 'u', 'n', 'r', 't', 'l', 's']
-    puntos = 0
-    for letra in candidata:
-        if letra in letras_puntuadas:
-            puntos += 1
-    return puntos
+    longitud = len(candidata)
+    if longitud >= 8:
+        return 10
+    elif longitud >= 6:
+        return 7
+    elif longitud >= 4:
+        return 5
+    else:
+        return 1
 
 #busca en el diccionario paralabras correctas y devuelve una lista de estas
 def dameAlgunasCorrectas(letraPrincipal, letrasEnPantalla, diccionario):
