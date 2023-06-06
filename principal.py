@@ -5,7 +5,7 @@ import pygame
 from pygame.locals import *
 
 from configuracion import *
-from funcionesRESUELTO import *
+from funcionesVACIAS import *
 from extras import *
 
 #Funcion principal
@@ -39,7 +39,7 @@ def main():
 
         #se queda con 7 letras que permitan armar muchas palabras, evita que el juego sea aburrido
         while(len(dameAlgunasCorrectas(letraPrincipal, letrasEnPantalla, diccionario))< MINIMO):
-            letrasEnPantalla = dame7Letras()
+            letrasEnPantalla = dame7Letras(letras,vocales,consonanteDif)
             letraPrincipal = dameLetra(letrasEnPantalla)
 
         print(dameAlgunasCorrectas(letraPrincipal, letrasEnPantalla, diccionario))
@@ -53,7 +53,7 @@ def main():
             totaltime += gameClock.get_time()
 
             if True:
-            	fps = 3
+                fps = 3
 
             #Buscar la tecla apretada del modulo de eventos de pygame
             for e in pygame.event.get():
