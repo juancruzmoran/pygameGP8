@@ -3,6 +3,7 @@ from configuracion import *
 import random
 import math
 
+# Toma un diccionario como parámetro. Lee palabras del archivo "lemario.txt" y las agrega al diccionario. La función devuelve el diccionario actualizado.
 def lectura(diccionario):
     lemario = "lemario.txt"
     with open(lemario,"r",encoding="latin-1") as archivo:
@@ -13,45 +14,45 @@ def lectura(diccionario):
 
 diccionario = []
 
+#Toma como parámetros 3 listas de letras, crea una cadena, agregar las letras con ciertas condiciones, y luego las desordena y retorna la cadena desordenada
+def dame7Letras(list1,list2,list3): 
+    cadena=""
+    vocales=random.sample(list2, random.randint(2, 3)) 
+    cadena=cadena+"".join(vocales) 
 
-def dame7Letras(list1,list2,list3): #tomo como parametros 3 listas
-    cadena="" #Creo una cadena vacia
-    vocales=random.sample(list2, random.randint(2, 3)) #Con random.sample selecciono una vocal de forma aleatoria, con random.randint aleatoriamente se elige entre 2 y 3 (quien determinara la cantidad de vocales que se elegirán)
-    cadena=cadena+"".join(vocales) #Agrego lo anterior a la cadena
+    cantidadDeLetras=4 if len(vocales)==2 else 3 
+    letras=random.sample(list1,cantidadDeLetras) 
+    cadena=cadena+"".join(letras) 
 
-    cantidadDeLetras=4 if len(vocales)==2 else 3 #La cantidad de letras a elegir se condiciona: serán 4 si las vocales en el paso anterior fueron 2, sino serán 3
-    letras=random.sample(list1,cantidadDeLetras) #uso random.sample para que aleatoriamente elija las letras
-    cadena=cadena+"".join(letras) #Agrego lo anterior a la cadena
+    consonanteDif=random.choice(list3)
+    cadena=cadena+"".join(consonanteDif) 
 
-    consonanteDif=random.choice(list3) #Elijo una consonante dificil aleatoriamente con random
-    cadena=cadena+"".join(consonanteDif) #Agrego lo anterior a la cadena
+    desordenarCadena=random.sample(cadena,len(cadena)) 
+    cadenaDesordenada="".join(desordenarCadena) 
 
-    desordenarCadena=random.sample(cadena,len(cadena)) #Paso como argumento la cadena y su longitud, para que random.sample la desordene aleatoriamente
-    cadenaDesordenada="".join(desordenarCadena) #Almaceno la cadena desordenada en la variable
-
-    return cadenaDesordenada #retorno la cadena desordenada
+    return cadenaDesordenada
 
 letras=["b","c","d","f","g","h","j","l","m","n","p","q","r","s","t","u","v","w"]
 vocales=["a","e","i","o","u"]
 consonanteDif=["k","x","y","z"]
 
-dame7Letras(letras,vocales,consonanteDif) #llamo a la función
+dame7Letras(letras,vocales,consonanteDif) 
 
-#elige una letra de las letras en pantalla
-def dameLetra(letrasEnPantalla): #toma el parámetro de letras en pantalla
-    cadena=letrasEnPantalla #Se pasa el valor del letras en pantalla a una variable llamada cadena
-    letraAleatoria=random.choice(cadena) #Se utiliza random choice para elegir una letra aleatoria de la cadena
+#Elige y devuelve una letra de la cadena que recibe (letras en pantalla).
+def dameLetra(letrasEnPantalla): 
+    cadena=letrasEnPantalla 
+    letraAleatoria=random.choice(cadena) 
 
-    return letraAleatoria #retorna la letra aleatoria elegida anteriormente
+    return letraAleatoria
 
+#Si la palabra cumple con los requisitos suma puntos, sino resta
 def procesar(letraPrincipal, letrasEnPantalla, candidata, diccionario):
     if len(candidata)>=3 and letraPrincipal in candidata and candidata in diccionario:
         return puntos(candidata)
     else:
         return -1
 
-#chequea que se use la letra principal, solo use letras de la pantalla y
-#exista en el diccionario
+#chequea que se use la letra principal, solo use letras de la pantalla y exista en el diccionario
 def esValida(letraPrincipal, letrasEnPantalla, candidata, diccionario):
     if letraPrincipal in candidata:
         for letra in candidata:
@@ -61,7 +62,7 @@ def esValida(letraPrincipal, letrasEnPantalla, candidata, diccionario):
             return True
     return False
 
-#devuelve los puntos
+#devuelve los puntos:
 def puntos(candidata):
 
     if len(candidata)==3:
