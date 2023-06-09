@@ -5,13 +5,15 @@ import pygame
 from pygame.locals import *
 
 from configuracion import *
-from funcionesRESUELTO import *
+#from funcionesRESUELTO import *
 from extras import *
+from funcionesVACIAS import *
 
 #Funcion principal
 def main():
         #Centrar la ventana y despues inicializar pygame
         os.environ["SDL_VIDEO_CENTERED"] = "1"
+
         pygame.init()
         #pygame.mixer.init()
 
@@ -34,12 +36,12 @@ def main():
         lectura(diccionario)
 
         #elige las 7 letras al azar y una de ellas como principal
-        letrasEnPantalla = dame7Letras()
+        letrasEnPantalla = dame7Letras(letras,vocales,consonanteDif)
         letraPrincipal = dameLetra(letrasEnPantalla)
 
         #se queda con 7 letras que permitan armar muchas palabras, evita que el juego sea aburrido
         while(len(dameAlgunasCorrectas(letraPrincipal, letrasEnPantalla, diccionario))< MINIMO):
-            letrasEnPantalla = dame7Letras()
+            letrasEnPantalla = dame7Letras(letras,vocales,consonanteDif)
             letraPrincipal = dameLetra(letrasEnPantalla)
 
         print(dameAlgunasCorrectas(letraPrincipal, letrasEnPantalla, diccionario))
@@ -58,7 +60,7 @@ def main():
             #Buscar la tecla apretada del modulo de eventos de pygame
             for e in pygame.event.get():
 
-                #QUIT es apretar la X en la ventana
+            #QUIT es apretar la X en la ventana
                 if e.type == QUIT:
                     pygame.quit()
                     return()
@@ -92,4 +94,6 @@ def main():
 
 #Programa Principal ejecuta Main
 if __name__ == "__main__":
-    main()
+    fondoInicio()
+    if menu() == "play":
+        main()
