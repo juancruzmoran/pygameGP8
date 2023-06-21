@@ -1,14 +1,40 @@
+#! /usr/bin/env python
+import os, random, sys, math
+
+import pygame
+from pygame.locals import *
+
+from configuracion import *
+#from funcionesRESUELTO import *
+from extras import *
+from funcionesVACIAS import *
 
 #Funcion principal
 def main():
         #Centrar la ventana y despues inicializar pygame
         os.environ["SDL_VIDEO_CENTERED"] = "1"
         pygame.init()
-        #pygame.mixer.init()
 
         #Preparar la ventana
         pygame.display.set_caption("Tiene la Palabra")
         screen = pygame.display.set_mode((ANCHO, ALTO))
+
+        #Inicializa el mezclador de musica
+        pygame.mixer.init()
+
+        # Obtener la ruta completa de los archivos de sonido
+        acierto_sound_path = os.path.join(os.path.dirname(__file__), "acierto.wav")
+        incorrecta_sound_path = os.path.join(os.path.dirname(__file__), "incorrecto.wav")
+
+        # Cargar los archivos de sonido
+        acierto_sound = pygame.mixer.Sound(acierto_sound_path)
+        incorrecta_sound = pygame.mixer.Sound(incorrecta_sound_path)
+
+        # Preparar la música de fondo
+        pygame.mixer.music.load("musica_fondo.wav")
+        pygame.mixer.music.set_volume(0.5)
+        pygame.mixer.music.play(-1)
+
 
         #tiempo total del juego
         gameClock = pygame.time.Clock()
@@ -49,7 +75,7 @@ def main():
             #Buscar la tecla apretada del modulo de eventos de pygame
             for e in pygame.event.get():
 
-                #QUIT es apretar la X en la ventana
+            #QUIT es apretar la X en la ventana
                 if e.type == QUIT:
                     pygame.quit()
                     return()
@@ -61,10 +87,15 @@ def main():
                     if e.key == K_BACKSPACE:
                         candidata = candidata[0:len(candidata)-1] #borra la ultima
                     if e.key == K_RETURN:  #presionó enter
-                        puntos += procesar(letraPrincipal, letrasEnPantalla, candidata, diccionario)
+                        if esValida(letraPrincipal, letrasEnPantalla, candidata, diccionario):
+                            puntos += procesar(letraPrincipal, letrasEnPantalla, candidata, diccionario)
+                            acierto_sound.play()
+                        else:
+                            incorrecta_sound.play()
                         candidata = ""
 
             segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000
+
 
             #Limpiar pantalla anterior
             screen.fill(COLOR_FONDO)
@@ -73,6 +104,10 @@ def main():
             dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundos)
 
             pygame.display.flip()
+
+        #Detener la música de fondo
+        pygame.mixer.music.stop()
+        pygame.mixer.quit()
 
         while 1:
             #Esperar el QUIT del usuario
@@ -83,4 +118,7 @@ def main():
 
 #Programa Principal ejecuta Main
 if __name__ == "__main__":
-    main()
+    fondoInicio()
+    if menu() == "play":
+        main()
+
