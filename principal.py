@@ -4,7 +4,7 @@ import os, random, sys, math
 import pygame
 from pygame.locals import *
 
-from configuracion import *
+# from configuracion import *
 #from funcionesRESUELTO import *
 from extras import *
 from funcionesVACIAS import *
@@ -31,9 +31,10 @@ def main():
         incorrecta_sound = pygame.mixer.Sound(incorrecta_sound_path)
 
         # Preparar la música de fondo
-        pygame.mixer.music.load("musica_fondo.wav")
-        pygame.mixer.music.set_volume(0.5)
-        pygame.mixer.music.play(-1)
+        if menu_state[1] == '1':
+            pygame.mixer.music.load("musica_fondo.wav")
+            pygame.mixer.music.set_volume(0.5)
+            pygame.mixer.music.play(-1)
 
 
         #tiempo total del juego
@@ -89,9 +90,11 @@ def main():
                     if e.key == K_RETURN:  #presionó enter
                         if esValida(letraPrincipal, letrasEnPantalla, candidata, diccionario):
                             puntos += procesar(letraPrincipal, letrasEnPantalla, candidata, diccionario)
-                            acierto_sound.play()
+                            if menu_state[1] == '1':
+                                acierto_sound.play()
                         else:
-                            incorrecta_sound.play()
+                            if menu_state[1] == '1':
+                                incorrecta_sound.play()
                         candidata = ""
 
             segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000
@@ -106,8 +109,9 @@ def main():
             pygame.display.flip()
 
         #Detener la música de fondo
-        pygame.mixer.music.stop()
-        pygame.mixer.quit()
+        if menu_state[1] == '1':
+            pygame.mixer.music.stop()
+            pygame.mixer.quit()
 
         while 1:
             #Esperar el QUIT del usuario
@@ -117,7 +121,10 @@ def main():
                     return
 
 #Programa Principal ejecuta Main
-if __name__ == "__main__":
+menu_state = ["main","1"]
+if __name__ == "__main__": 
     fondoInicio()
-    if menu() == "play":
+    menu_state = menu()
+    while menu_state[0] == "play":
         main()
+        menu_state = menu()
