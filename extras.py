@@ -138,16 +138,25 @@ def menu():
     keys_img = pygame.image.load('images/button_keys.png').convert_alpha()
     back_img = pygame.image.load('images/button_back.png').convert_alpha()
 
+    facil_img = pygame.image.load('images/button_facil.png').convert_alpha()
+    media_img = pygame.image.load('images/button_Media.png').convert_alpha()
+    desafiante_img = pygame.image.load('images/button_Desafiante.png').convert_alpha()
+
     #create button instances
     play_button = button.Button(297, 200, play_img, 1)
     options_button = button.Button(297, 300, options_img, 1)
     levels_button = button.Button(297, 400, levels_img, 1)
     quit_button = button.Button(336, 500, quit_img, 1)
 
+
     # video_button = button.Button(226, 75, video_img, 1)
     audio_button = button.Button(225, 50, audio_img, 1)
     keys_button = button.Button(246, 325, keys_img, 1)
-    back_button = button.Button(332, 150, back_img, 1)
+    back_button = button.Button(332, 135, back_img, 1)
+
+    facil_button = button.Button(225, 220, facil_img, 1)
+    media_button = button.Button(225, 305, media_img, 1)
+    desafiante_button = button.Button(225, 390, desafiante_img, 1)
 
     def draw_text(text, font, text_col, x, y):
         img = font.render(text, True, text_col)
@@ -194,7 +203,17 @@ def menu():
                 menu_state[0] = "main"
         # else:
         #     draw_text("Presiona ESPACIO para Iniciar", font, TEXT_COL, 160, 250)
-
+        if menu_state[0] == "levels":
+            screen.fill((52, 78, 91))
+            screen.blit(background, [0, 0])
+            if facil_button.draw(screen):
+                 print("Facil") # seterar nuevo parametro en la lista
+            if media_button.draw(screen):
+                print("Media") # seterar nuevo parametro en la lista
+            if desafiante_button.draw(screen):
+                print("facil") # seterar nuevo parametro en la lista
+            if back_button.draw(screen):
+                menu_state[0] = "main"
         #event handler
         for event in pygame.event.get():
             # if event.type == pygame.KEYDOWN:
