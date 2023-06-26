@@ -13,7 +13,6 @@ from funcionesVACIAS import *
 def main():
         #Centrar la ventana y despues inicializar pygame
         os.environ["SDL_VIDEO_CENTERED"] = "1"
-
         pygame.init()
 
         #Preparar la ventana
@@ -72,7 +71,7 @@ def main():
             totaltime += gameClock.get_time()
 
             if True:
-                fps = 3
+            	fps = 3
 
             #Buscar la tecla apretada del modulo de eventos de pygame
             for e in pygame.event.get():
