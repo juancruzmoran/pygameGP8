@@ -65,7 +65,8 @@ def dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundo
 
     defaultFont= pygame.font.Font( pygame.font.get_default_font(), 20)
     defaultFontGrande= pygame.font.Font( pygame.font.get_default_font(), 80)
-
+    background = pygame.image.load("images/Backgroum1.jpg").convert()
+    screen.blit(background, [0, 0])
     #Linea del piso
     pygame.draw.line(screen, (255,255,255), (0, ALTO-70) , (ANCHO, ALTO-70), 5)
 
@@ -112,11 +113,11 @@ def menu():
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Menu")
+    background = pygame.image.load("images/backgroundMenu.jpg").convert()
 
     #game variables
     game_paused = False
-    menu_state = "main"
-
+    menu_state = ["main","1"]
     #define fonts
     font = pygame.font.SysFont("arialblack", 40)
 
@@ -133,9 +134,13 @@ def menu():
     # options_img = pygame.image.load("images/button_options.png").convert_alpha()
     # quit_img = pygame.image.load("images/button_quit.png").convert_alpha()
     # video_img = pygame.image.load('images/button_video.png').convert_alpha()
-    # audio_img = pygame.image.load('images/button_audio.png').convert_alpha()
-    # keys_img = pygame.image.load('images/button_keys.png').convert_alpha()
-    # back_img = pygame.image.load('images/button_back.png').convert_alpha()
+    audio_img = pygame.image.load('images/button_audio.png').convert_alpha()
+    keys_img = pygame.image.load('images/button_keys.png').convert_alpha()
+    back_img = pygame.image.load('images/button_back.png').convert_alpha()
+
+    facil_img = pygame.image.load('images/button_facil.png').convert_alpha()
+    media_img = pygame.image.load('images/button_Media.png').convert_alpha()
+    desafiante_img = pygame.image.load('images/button_Desafiante.png').convert_alpha()
 
     #create button instances
     play_button = button.Button(297, 200, play_img, 1)
@@ -143,10 +148,15 @@ def menu():
     levels_button = button.Button(297, 400, levels_img, 1)
     quit_button = button.Button(336, 500, quit_img, 1)
 
+
     # video_button = button.Button(226, 75, video_img, 1)
-    # audio_button = button.Button(225, 200, audio_img, 1)
-    # keys_button = button.Button(246, 325, keys_img, 1)
-    # back_button = button.Button(332, 450, back_img, 1)
+    audio_button = button.Button(225, 50, audio_img, 1)
+    keys_button = button.Button(246, 325, keys_img, 1)
+    back_button = button.Button(332, 135, back_img, 1)
+
+    facil_button = button.Button(225, 220, facil_img, 1)
+    media_button = button.Button(225, 305, media_img, 1)
+    desafiante_button = button.Button(225, 390, desafiante_img, 1)
 
     def draw_text(text, font, text_col, x, y):
         img = font.render(text, True, text_col)
@@ -160,42 +170,55 @@ def menu():
     while run:
 
         screen.fill((52, 78, 91))
-
+        screen.blit(background, [0, 0])
         #check if game is paused
-        if game_paused == True:
+        # if game_paused == True:
             #check menu state
-            if menu_state == "main":
-                menu_state = "main"
-            #draw pause screen buttons
-            if play_button.draw(screen):
-                menu_state = "play"
-                run = False
-            if options_button.draw(screen):
-                menu_state = "options"
-            if levels_button.draw(screen):
-                menu_state = "levels"
-            if quit_button.draw(screen):
-                run = False
-            #check if the options menu is open
-            if menu_state == "options":
-                menu_state = "main"
-            #draw the different options buttons
-            # if video_button.draw(screen):
-            #     print("Video Settings")
-            # if audio_button.draw(screen):
-            #     print("Audio Settings")
-            # if keys_button.draw(screen):
-            #     print("Change Key Bindings")
-            # if back_button.draw(screen):
-            #     menu_state = "main"
-        else:
-            draw_text("Presiona ESPACIO para Iniciar", font, TEXT_COL, 160, 250)
-
+        if menu_state == "main":
+            menu_state[0] = "main"
+        #draw pause screen buttons
+        if play_button.draw(screen):
+            menu_state[0] = "play"
+            run = False
+        if options_button.draw(screen):
+            menu_state[0] = "options"
+        if levels_button.draw(screen):
+            menu_state[0] = "levels"
+        if quit_button.draw(screen):
+            run = False
+        #check if the options menu is open
+        if menu_state[0] == "options":
+        #draw the different options buttons
+        # if video_button.draw(screen):
+        #     print("Video Settings")
+            screen.fill((52, 78, 91))
+            screen.blit(background, [0, 0])
+            #menu_state[0] = "audio"
+            if audio_button.draw(screen):
+                menu_state[0] = "audio"    
+            if menu_state[0] == "audio":
+                    menu_state[1] = '0'
+                    menu_state[0]  = "main"
+            if back_button.draw(screen):
+                menu_state[0] = "main"
+        # else:
+        #     draw_text("Presiona ESPACIO para Iniciar", font, TEXT_COL, 160, 250)
+        if menu_state[0] == "levels":
+            screen.fill((52, 78, 91))
+            screen.blit(background, [0, 0])
+            if facil_button.draw(screen):
+                 print("Facil") # seterar nuevo parametro en la lista
+            if media_button.draw(screen):
+                print("Media") # seterar nuevo parametro en la lista
+            if desafiante_button.draw(screen):
+                print("facil") # seterar nuevo parametro en la lista
+            if back_button.draw(screen):
+                menu_state[0] = "main"
         #event handler
         for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    game_paused = True
+            # if event.type == pygame.KEYDOWN:
+            #     if event.key == pygame.K_SPACE:
+            #         game_paused = True
             if event.type == pygame.QUIT:
                 run = False
 
